@@ -1,5 +1,6 @@
 from keras.models import Sequential
 from keras.layers import Dense, Activation
+from tensorflow.keras.utils import to_categorical
 import numpy as np
 
 # Model Template
@@ -29,6 +30,7 @@ labels = np.load('labels.npy')
 mask = np.random.rand(len(images)) <= .6
 x_train = images[mask]
 y_train = labels[mask]
+y_train = to_categorical(y_train, 10)
 
 remaining_images = images[~mask]
 remaining_labels = labels[~mask]
@@ -36,9 +38,11 @@ remaining_labels = labels[~mask]
 mask = np.random.rand(len(remaining_images)) <=  .375
 x_val = remaining_images[mask]
 y_val = remaining_labels[mask]
+y_val = to_categorical(y_val, 10)
 
 x_test = remaining_images[~mask]
 y_test = remaining_labels[~mask]
+y_test = to_categorical(y_val, 10)
 
 # Train Model
 history = model.fit(x_train, y_train, 
@@ -50,5 +54,5 @@ history = model.fit(x_train, y_train,
 # Report Results
 
 print(history.history)
-model.predict()
+model.predict(x_test)
 
