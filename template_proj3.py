@@ -7,8 +7,11 @@ import numpy as np
 model = Sequential() # declare model
 model.add(Dense(10, input_shape=(28*28, ), kernel_initializer='he_normal')) # first layer
 model.add(Activation('relu'))
-
+# 
+# 
 # Fill in Model Here
+# 
+# 
 model.add(Dense(10, kernel_initializer='he_normal')) # last layer
 model.add(Activation('softmax'))
 
