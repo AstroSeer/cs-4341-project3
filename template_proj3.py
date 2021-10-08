@@ -7,12 +7,8 @@ import numpy as np
 model = Sequential() # declare model
 model.add(Dense(10, input_shape=(28*28, ), kernel_initializer='he_normal')) # first layer
 model.add(Activation('relu'))
-#
-#
-#
+
 # Fill in Model Here
-#
-#
 model.add(Dense(10, kernel_initializer='he_normal')) # last layer
 model.add(Activation('softmax'))
 
@@ -21,6 +17,27 @@ model.add(Activation('softmax'))
 model.compile(optimizer='sgd',
               loss='categorical_crossentropy', 
               metrics=['accuracy'])
+
+#Load Data
+images = np.load('images.npy')
+labels = np.load('labels.npy')
+
+# Split Data
+mask = np.random.rand(len(images)) <= .6
+x_train = images[mask]
+y_train = labels[mask]
+
+remaining_images = images[~mask]
+remaining_labels = labels[~mask]
+
+mask = np.random.rand(len(remaining_images)) <=  .375
+x_val = remaining_images[mask]
+y_val = remaining_labels[mask]
+
+x_test = remaining_images[~mask]
+y_test = remaining_labels[~mask]
+
+print(len(x_train) + len(x_val) + len(x_test))
 
 # Train Model
 history = model.fit(x_train, y_train, 
@@ -33,3 +50,4 @@ history = model.fit(x_train, y_train,
 
 print(history.history)
 model.predict()
+
