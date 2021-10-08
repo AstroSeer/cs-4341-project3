@@ -37,8 +37,6 @@ y_val = remaining_labels[mask]
 x_test = remaining_images[~mask]
 y_test = remaining_labels[~mask]
 
-print(len(x_train) + len(x_val) + len(x_test))
-
 # Train Model
 history = model.fit(x_train, y_train, 
                     validation_data = (x_val, y_val), 
