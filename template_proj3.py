@@ -22,7 +22,7 @@ model.compile(optimizer='sgd',
               loss='categorical_crossentropy', 
               metrics=['accuracy'])
 
-#Load Data
+# Load Data
 images = np.load('images.npy')
 labels = np.load('labels.npy')
 
@@ -43,6 +43,10 @@ y_val = to_categorical(y_val, 10)
 x_test = remaining_images[~mask]
 y_test = remaining_labels[~mask]
 y_test = to_categorical(y_val, 10)
+
+# Normalize Data
+x_val, x_train = x_val / 255, x_train / 255
+x_test = x_test / 255
 
 # Train Model
 history = model.fit(x_train, y_train, 
