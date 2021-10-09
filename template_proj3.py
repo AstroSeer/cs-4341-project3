@@ -6,13 +6,13 @@ import numpy as np
 # Model Template
 
 model = Sequential() # declare model
-model.add(Dense(50, input_shape=(28*28, ), kernel_initializer='he_normal')) # first layer
+model.add(Dense(60, input_shape=(28*28, ), kernel_initializer='he_normal')) # first layer
 model.add(Activation('relu'))
 # model here
-model.add(Dense(200, activation="relu"))
 model.add(Dense(100, activation="relu"))
-model.add(Dense(100, activation="relu"))
-model.add(Dense(100, activation="relu"))
+# model.add(Dense(100, activation="relu"))
+# model.add(Dense(100, activation="relu"))
+# model.add(Dense(100, activation="relu"))
 model.add(Dense(100, activation="selu"))
 # 
 model.add(Dense(10, kernel_initializer='he_normal')) # last layer
