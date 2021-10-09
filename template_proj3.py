@@ -8,7 +8,12 @@ import numpy as np
 model = Sequential() # declare model
 model.add(Dense(10, input_shape=(28*28, ), kernel_initializer='he_normal')) # first layer
 model.add(Activation('relu'))
-# 
+model.add(Dense(300, activation="relu"))
+model.add(Dense(100, activation="relu"))
+model.add(Dense(100, activation="relu"))
+model.add(Dense(100, activation="relu"))
+model.add(Dense(100, activation="relu"))
+#
 # 
 # Fill in Model Here
 # 
