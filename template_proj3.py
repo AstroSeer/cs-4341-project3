@@ -6,17 +6,14 @@ import numpy as np
 # Model Template
 
 model = Sequential() # declare model
-model.add(Dense(10, input_shape=(28*28, ), kernel_initializer='he_normal')) # first layer
+model.add(Dense(50, input_shape=(28*28, ), kernel_initializer='he_normal')) # first layer
 model.add(Activation('relu'))
-model.add(Dense(300, activation="relu"))
+# model here
+model.add(Dense(200, activation="relu"))
 model.add(Dense(100, activation="relu"))
 model.add(Dense(100, activation="relu"))
 model.add(Dense(100, activation="relu"))
-model.add(Dense(100, activation="relu"))
-#
-# 
-# Fill in Model Here
-# 
+model.add(Dense(100, activation="selu"))
 # 
 model.add(Dense(10, kernel_initializer='he_normal')) # last layer
 model.add(Activation('softmax'))
@@ -56,7 +53,7 @@ x_test = x_test / 255
 # Train Model
 history = model.fit(x_train, y_train, 
                     validation_data = (x_val, y_val), 
-                    epochs=10, 
+                    epochs=10,
                     batch_size=512)
 
 
@@ -64,4 +61,4 @@ history = model.fit(x_train, y_train,
 
 print(history.history)
 model.predict(x_test)
-
+#model.summary()
