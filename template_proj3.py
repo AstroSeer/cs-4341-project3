@@ -53,7 +53,7 @@ x_test = x_test / 255
 # Train Model
 history = model.fit(x_train, y_train, 
                     validation_data = (x_val, y_val), 
-                    epochs=10,
+                    epochs=20,
                     batch_size=512)
 
 
