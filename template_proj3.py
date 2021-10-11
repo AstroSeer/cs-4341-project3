@@ -6,18 +6,17 @@ import numpy as np
 # Model Template
 
 model = Sequential() # declare model
-model.add(Dense(60, input_shape=(28*28, ), kernel_initializer='he_normal')) # first layer
+model.add(Dense(60, input_shape=(28*28, ), kernel_initializer='random_normal')) # first layer
 model.add(Activation('relu'))
 # model here
 model.add(Dense(100, activation="relu"))
-# model.add(Dense(100, activation="relu"))
+# model.add(Dense(50, activation="tanh"))
 # model.add(Dense(100, activation="relu"))
 # model.add(Dense(100, activation="relu"))
 model.add(Dense(100, activation="selu"))
 # 
 model.add(Dense(10, kernel_initializer='he_normal')) # last layer
 model.add(Activation('softmax'))
-
 
 # Compile Model
 model.compile(optimizer='sgd',
@@ -52,13 +51,12 @@ x_test = x_test / 255
 
 # Train Model
 history = model.fit(x_train, y_train, 
-                    validation_data = (x_val, y_val), 
+                    validation_data = (x_val, y_val),
                     epochs=20,
-                    batch_size=512)
+                    batch_size=128)
 
 
 # Report Results
 
 print(history.history)
 model.predict(x_test)
-#model.summary()
