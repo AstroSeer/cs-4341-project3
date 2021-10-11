@@ -2,6 +2,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Activation
 from tensorflow.keras.utils import to_categorical
 import numpy as np
+import matplotlib.pyplot as plt
 
 # Model Template
 
@@ -27,12 +28,15 @@ model.compile(optimizer='sgd',
 # Load Data
 images = np.load('images.npy')
 labels = np.load('labels.npy')
+print("labels")
+print(labels[0])
 
 # Split Data
 mask = np.random.rand(len(images)) <= .6
 x_train = images[mask]
 y_train = labels[mask]
 y_train = to_categorical(y_train, 10)
+print(y_train[0])
 
 remaining_images = images[~mask]
 remaining_labels = labels[~mask]
@@ -44,7 +48,8 @@ y_val = to_categorical(y_val, 10)
 
 x_test = remaining_images[~mask]
 y_test = remaining_labels[~mask]
-y_test = to_categorical(y_val, 10)
+y_true = y_test
+y_test = to_categorical(y_test, 10)
 
 # Normalize Data
 x_val, x_train = x_val / 255, x_train / 255
@@ -60,5 +65,26 @@ history = model.fit(x_train, y_train,
 # Report Results
 
 print(history.history)
-model.predict(x_test)
+
+predictions = model.predict(x_test)
+
+imgnames=['1','2','3']
+# Visualize Grayscale Images
+def visualize(img, i):
+    plt.imshow(np.reshape(img, (28,28)), cmap='gray', vmin=0, vmax=1)
+    plt.savefig(imgnames[i])
+
+# Confusion Matrix
+matrix = np.zeros((10,10), dtype=int)
+imgs = 0
+for i in range(len(predictions)):
+    row = np.argmax(predictions[i])
+    col = np.argmax(y_test[i])
+    matrix[row][col] += 1
+    if row != col and imgs < 3:
+        print("inside if statement")
+        visualize(x_test[i], imgs)
+        imgs+=1
+
+
 #model.summary()
