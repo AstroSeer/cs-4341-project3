@@ -81,7 +81,6 @@ for i in range(len(predictions)):
     col = np.argmax(y_test[i])
     matrix[row][col] += 1
     if row != col and imgs < 3:
-        print("inside if statement")
         visualize(x_test[i], imgs)
         imgs+=1
 
