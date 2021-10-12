@@ -3,6 +3,7 @@
 from keras.models import Sequential
 from keras.layers import Dense, Activation
 from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.models import load_model
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -64,11 +65,13 @@ history = model.fit(x_train, y_train,
 
 print(history.history)
 
-predictions = model.predict(x_test)
-
 # Save Model
+model.save('best-saved-model', save_format='h5')
+del model
+# Load model to test saving & Loading
+model = load_model('best-saved-model')
 
-model.save('best-model')
+predictions = model.predict(x_test)
 
 imgnames=['1','2','3']
 # Visualize Grayscale Images of misclassified objects
@@ -84,8 +87,10 @@ for i in range(len(predictions)):
     col = np.argmax(y_test[i])
     matrix[row][col] += 1
     if row != col and imgs < 3:
+        #print("row = " + str(row))
+        #print("col = " + str(col))
         visualize(x_test[i], imgs)
         imgs+=1
 
-
+print(matrix)
 #model.summary()
