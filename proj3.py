@@ -1,3 +1,5 @@
+# CS 4341 Project 3
+# Alex Hunt, Matthew Nagy, Matthew Vindigni
 from keras.models import Sequential
 from keras.layers import Dense, Activation
 from tensorflow.keras.utils import to_categorical
@@ -9,11 +11,8 @@ import matplotlib.pyplot as plt
 model = Sequential() # declare model
 model.add(Dense(60, input_shape=(28*28, ), kernel_initializer='random_normal')) # first layer
 model.add(Activation('relu'))
-# model here
+# Hidden Layers
 model.add(Dense(100, activation="relu"))
-# model.add(Dense(50, activation="tanh"))
-# model.add(Dense(100, activation="relu"))
-# model.add(Dense(100, activation="relu"))
 model.add(Dense(100, activation="selu"))
 # 
 model.add(Dense(10, kernel_initializer='he_normal')) # last layer
@@ -50,7 +49,7 @@ y_test = remaining_labels[~mask]
 y_true = y_test
 y_test = to_categorical(y_test, 10)
 
-# Normalize Data
+# Normalize Data values to 0-1 from 0-255
 x_val, x_train = x_val / 255, x_train / 255
 x_test = x_test / 255
 
@@ -67,13 +66,17 @@ print(history.history)
 
 predictions = model.predict(x_test)
 
+# Save Model
+
+model.save('best-model')
+
 imgnames=['1','2','3']
-# Visualize Grayscale Images
+# Visualize Grayscale Images of misclassified objects
 def visualize(img, i):
     plt.imshow(np.reshape(img, (28,28)), cmap='gray', vmin=0, vmax=1)
     plt.savefig(imgnames[i])
 
-# Confusion Matrix
+# Produce Confusion Matrix
 matrix = np.zeros((10,10), dtype=int)
 imgs = 0
 for i in range(len(predictions)):
